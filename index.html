@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozine - Security Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #d4d4d4;
+            background: #0a0a0a;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            border-bottom: 1px solid #262626;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 26px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #888;
+            font-size: 15px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #262626;
+            padding-bottom: 15px;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            font-size: 15px;
+            color: #888;
+            cursor: pointer;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        nav button.active {
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        nav button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ffffff;
+        }
+
+        nav button:hover {
+            color: #ffffff;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 30px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        p {
+            margin-bottom: 12px;
+            color: #d4d4d4;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            color: #d4d4d4;
+        }
+
+        strong {
+            color: #ffffff;
+        }
+
+        a {
+            color: #6ba4ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .last-updated {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: #1a1a1a;
+            border-left: 3px solid #6ba4ff;
+            padding: 12px 15px;
+            margin: 15px 0;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #262626;
+            color: #888;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav button.active::after {
+                display: none;
+            }
+
+            nav button {
+                padding: 8px 12px;
+                background: #1a1a1a;
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cozine</h1>
+            <p>Security and anti-exploit utility for Discord servers</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-target="privacy">Privacy Policy</button>
+            <button class="nav-btn" data-target="tos">Terms of Service</button>
+        </nav>
+
+        <div id="privacy" class="content active">
+            <p class="last-updated"><strong>Last Updated:</strong> May 6, 2026</p>
+
+            <h2>What We Collect</h2>
+            <ul>
+                <li><strong>User IDs</strong> - Discord user identifiers</li>
+                <li><strong>Guild IDs</strong> - Server identifiers where the bot is active</li>
+                <li><strong>Security Logs</strong> - Records of violations and exploit activity</li>
+            </ul>
+
+            <h2>How We Use Data</h2>
+            <p>Data is used strictly for community safety and identifying bad actors. This includes:</p>
+            <ul>
+                <li>Cross-referencing new members against known exploiters</li>
+                <li>Sending alerts to moderators about potential threats</li>
+                <li>Maintaining records of security violations</li>
+            </ul>
+
+            <h2>Data Retention</h2>
+            <div class="highlight">
+                <p><strong>Security Logs</strong> are kept for platform integrity and are not automatically deleted upon request. This prevents bad actors from wiping their history.</p>
+            </div>
+            <p>We understand that security researchers, investigators, or people working against exploiters may get flagged. If you believe your data was logged in error, you can submit an appeal through our <a href="https://discord.gg/your-support-server" target="_blank">support server</a>. Each case is reviewed manually.</p>
+
+            <h2>Data Storage</h2>
+            <ul>
+                <li>Stored in encrypted databases on secure servers</li>
+                <li>Access restricted to bot administrators</li>
+                <li>No data is sold or shared with third parties</li>
+            </ul>
+
+            <h2>Contact</h2>
+            <p>For questions or appeals, join our <a href="https://discord.gg/ah8TjsdNV" target="_blank">support server</a>.</p>
+        </div>
+
+        <div id="tos" class="content">
+            <p class="last-updated"><strong>Last Updated:</strong> May 6, 2026</p>
+
+            <h2>What Cozine Does</h2>
+            <p>Cozine is a tool for moderators. It identifies potential threats and sends alerts. <strong>We are not responsible for individual server ban decisions.</strong> Moderators make the final call.</p>
+
+            <h2>Acceptable Use</h2>
+            <ul>
+                <li>Use the bot only for legitimate server moderation</li>
+                <li>Do not use the bot to harass or target users</li>
+                <li>Do not attempt to manipulate or abuse the alert system</li>
+            </ul>
+
+            <h2>Prohibited Actions</h2>
+            <ul>
+                <li>Using the bot outside of moderation purposes</li>
+                <li>Attempting to reverse engineer or extract data</li>
+                <li>Sharing false reports to get users flagged</li>
+            </ul>
+
+            <h2>Service Disclaimer</h2>
+            <p>Cozine is provided "as-is" with no guarantees of uptime or accuracy. Alerts may flag security researchers or people investigating exploiters. We are not liable for:</p>
+            <ul>
+                <li>Server disruptions or downtime</li>
+                <li>Incorrect flags or missed threats</li>
+                <li>Actions taken by moderators based on bot alerts</li>
+            </ul>
+
+            <h2>Eligibility</h2>
+            <ul>
+                <li>Must be 13+ years old (Discord's minimum age)</li>
+                <li>Must comply with Discord's Terms of Service</li>
+            </ul>
+
+            <h2>Contact</h2>
+            <p>For questions or appeals, join our <a href="https://discord.gg/ah8TjsdNV" target="_blank">support server</a>.</p>
+        </div>
+
+        <footer>
+            <p>Cozine Discord Bot</p>
+        </footer>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.nav-btn');
+        const contents = document.querySelectorAll('.content');
+
+        function switchTab(tabId) {
+            buttons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.target === tabId);
+            });
+            contents.forEach(content => {
+                content.classList.toggle('active', content.id === tabId);
+            });
+            window.scrollTo(0, 0);
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                switchTab(button.dataset.target);
+            });
+        });
+
+        const hash = window.location.hash.slice(1);
+        if (hash === 'tos') {
+            switchTab('tos');
+        }
+    </script>
+</body>
+</html>
