@@ -117,6 +117,7 @@
         a {
             color: #6ba4ff;
             text-decoration: none;
+            cursor: pointer;
         }
 
         a:hover {
@@ -184,23 +185,24 @@
         </nav>
 
         <div id="privacy" class="content active">
-            <p class="last-updated"><strong>Last Updated:</strong> June 21, 2026</p>
+            <p class="last-updated"><strong>Last Updated:</strong> July 20, 2026</p>
 
             <div class="highlight">
                 <p><strong>By using Cozine, you agree to this Privacy Policy and our Terms of Service.</strong> Please read both documents carefully. If you do not agree, do not install or use the bot.</p>
             </div>
 
             <h2>How We Collect Information</h2>
-            <p>All information is collected through official, authorized APIs only:</p>
+            <p>All information is collected through public data tracking and platform integration:</p>
             <ul>
-                <li><strong>Discord Bot API</strong> - We collect member data only from servers where Cozine has been installed by server administrators</li>
-                <li><strong>Roblox Public API</strong> - Public profile information to verify Roblox account status</li>
+                <li><strong>Discord Platform Data</strong> - We access publicly accessible member data, presence information, and shared security logs within mutual servers where Cozine has authorized access.</li>
+                <li><strong>Roblox Public API</strong> - Public profile information to verify Roblox account status.</li>
             </ul>
 
             <h2>What We Collect</h2>
             <ul>
                 <li><strong>User IDs</strong> - Unique Discord identifiers</li>
                 <li><strong>Guild IDs</strong> - Server identifiers where the bot is active</li>
+                <li><strong>Roblox Account IDs</strong> - Unique Roblox identifiers linked to documented activity</li>
                 <li><strong>Security Logs</strong> - Records of violations and exploit activity</li>
             </ul>
 
@@ -230,7 +232,7 @@
         </div>
 
         <div id="tos" class="content">
-            <p class="last-updated"><strong>Last Updated:</strong> June 21, 2026</p>
+            <p class="last-updated"><strong>Last Updated:</strong> July 20, 2026</p>
 
             <div class="highlight">
                 <p><strong>By using Cozine, you agree to these Terms of Service and our Privacy Policy.</strong> Please read both documents carefully. If you do not agree, do not install or use the bot.</p>
@@ -243,7 +245,17 @@
                 <li>Using Roblox cheats or hacks</li>
                 <li>Violating Discord's Terms of Service in ways that affect community safety</li>
             </ul>
-            <p>When a flagged user joins a server where Cozine is installed, moderators receive an alert. <strong>We are not responsible for individual server ban decisions.</strong> Moderators make the final call on whether to take action.</p>
+            <p>Servers can opt-in to receive automated notifications using the designated setup command. When a flagged user joins a configured server, moderators will receive an alert. <strong>We are not responsible for individual server ban decisions.</strong> Moderators make the final call on whether to take action.</p>
+
+            <h2>Payment Terms & Account Access</h2>
+            <p>By purchasing access to Cozine, you explicitly agree to the following terms. Running the <code>/skid</code> command requires you to confirm agreement prior to finalizing payment:</p>
+            <ul>
+                <li><strong>Strict Restrictions:</strong> You may use the bot to expose exploiters, but you are strictly prohibited from using it to harass, threaten, dox, or incite action against them.</li>
+                <li><strong>No Tampering:</strong> You may not reverse engineer, bypass, or attempt to bypass the bot's restrictions, limitations, or protections.</li>
+                <li><strong>No Facilitation:</strong> You are prohibited from helping exploiters evade detection or avoid consequences.</li>
+                <li><strong>Account Locking:</strong> Purchased access is tied exclusively to the Discord account that made the payment. Access cannot be transferred or reassigned to another account. Separate accounts require individual purchases.</li>
+                <li><strong>No-Refund Revocation:</strong> Violating any of these rules will result in immediate termination of access without a refund, regardless of whether your payment period has already started.</li>
+            </ul>
 
             <h2>Accuracy & Appeals</h2>
             <p>Our flags are 100% accurate based on documented evidence. However, if you believe you were flagged in error, you can appeal through our <a href="https://discord.gg/3ZBebypZJS" target="_blank">support server</a>. Appeals are reviewed within <strong>48 hours</strong> during normal operations. Response times may extend to several weeks during high volume periods. See our Privacy Policy for the full appeals process.</p>
@@ -293,7 +305,7 @@
             <p>We may update these Terms of Service at any time. We will notify users of significant changes through our <a href="https://discord.gg/3ZBebypZJS" target="_blank">support server</a>. Your continued use of Cozine after changes constitute acceptance of the updated terms.</p>
 
             <h2>Agreement & Privacy</h2>
-            <p>For information about how we collect, store, and use data, see our <a href="#privacy">Privacy Policy</a>.</p>
+            <p>For information about how we collect, store, and use data, see our <a onclick="switchTab('privacy')">Privacy Policy</a>.</p>
 
             <h2>Contact</h2>
             <p>For questions, appeals, or other concerns, join our <a href="https://discord.gg/3ZBebypZJS" target="_blank">support server</a>.</p>
