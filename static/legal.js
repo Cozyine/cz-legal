@@ -11,18 +11,22 @@ function switchTab(tabId) {
     window.scrollTo(0, 0);
 }
 
-const path = window.location.pathname;
-let base = path.endsWith('/') ? path.slice(0, -1) : path;
-base = base.replace(/\/[^/]*$/, '');
+function tabBase() {
+    const path = window.location.pathname;
+    let base = path.endsWith('/') ? path.slice(0, -1) : path;
+    return base.replace(/\/[^/]*$/, '');
+}
+
+function goToTab(target) {
+    switchTab(target);
+    history.pushState(null, '', tabBase() + '/' + target);
+}
 
 buttons.forEach(button => {
-    button.addEventListener('click', () => {
-        const target = button.dataset.target;
-        switchTab(target);
-        history.pushState(null, '', base + '/' + target);
-    });
+    button.addEventListener('click', () => goToTab(button.dataset.target));
 });
 
+const path = window.location.pathname;
 if (path.endsWith('/tos') || path.endsWith('/tos/')) {
     switchTab('tos');
 } else {
