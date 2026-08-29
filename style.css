@@ -1,0 +1,185 @@
+:root {
+  --bg: #0e0f13;
+  --card: #16181f;
+  --card-2: #1d2029;
+  --text: #e8eaf0;
+  --muted: #8b90a0;
+  --accent: #C06030;
+  --border: #262a35;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 50% -10%, #171a22 0%, var(--bg) 60%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* card */
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  padding: 40px 32px;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+  animation: cardIn .9s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+.logo {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 22px;
+  border-radius: 22px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+  animation: fadeUp .8s ease .15s both;
+}
+
+h1 {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  color: var(--text);
+}
+
+.tag {
+  margin: 10px 0 28px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  animation: fadeUp .8s ease .25s both;
+}
+
+.btns {
+  display: grid;
+  gap: 12px;
+  animation: fadeUp .8s ease .35s both;
+}
+
+a.btn {
+  display: block;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .12s ease, filter .12s ease, background .12s ease;
+}
+
+a.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.primary {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+}
+
+.ghost {
+  background: var(--card-2);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.footer {
+  margin-top: 26px;
+  color: var(--muted);
+  font-size: 12px;
+  transition: transform .4s ease;
+  animation: fadeIn .8s ease .5s both;
+}
+
+.footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--text);
+}
+
+/* nudge the footer left while the discord pill is open */
+.card:has(.discord-pill:hover) .footer {
+  transform: translateX(-30px);
+}
+
+/* discord pill */
+.discord-pill {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  min-width: 44px;
+  max-width: 44px;
+  padding: 0 10px;
+  overflow: hidden;
+  color: #fff;
+  background: #C06030;
+  border-radius: 999px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: max-width .5s ease, filter .2s ease;
+}
+
+.discord-pill:hover {
+  max-width: 190px;
+  filter: brightness(1.08);
+}
+
+.discord-pill img {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+}
+
+.discord-pill span {
+  opacity: 0;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity .4s ease .12s;
+}
+
+.discord-pill:hover span {
+  opacity: 1;
+}
+
+/* entrance animations */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
