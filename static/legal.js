@@ -26,6 +26,13 @@ buttons.forEach(button => {
     button.addEventListener('click', () => goToTab(button.dataset.target));
 });
 
+document.querySelectorAll('.tab-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToTab(link.dataset.target);
+    });
+});
+
 const path = window.location.pathname;
 if (path.endsWith('/tos') || path.endsWith('/tos/')) {
     switchTab('tos');
