@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cozine</title>
+<link rel="icon" href="asset/logo.png">
+<style>
+  :root{
+    --bg:#0e0f13;
+    --card:#16181f;
+    --card-2:#1d2029;
+    --text:#e8eaf0;
+    --muted:#8b90a0;
+    --accent:#C06030;
+    --accent-2:#D8A890;
+    --border:#262a35;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -10%,#171a22 0%,var(--bg) 60%);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .card{
+    width:100%;
+    max-width:460px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:40px 32px;
+    text-align:center;
+    position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    animation:cardIn .9s cubic-bezier(.2,.7,.3,1) both;
+  }
+  @keyframes cardIn{
+    from{opacity:0;transform:translateY(18px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+  }
+  .logo{animation:fadeUp .8s ease .15s both}
+  .tag{animation:fadeUp .8s ease .25s both}
+  .btns{animation:fadeUp .8s ease .35s both}
+  .footer{animation:fadeIn .8s ease .5s both}
+  .logo{
+    width:96px;
+    height:96px;
+    border-radius:22px;
+    margin:0 auto 22px;
+    display:block;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+  h1{
+    font-size:34px;
+    letter-spacing:.5px;
+    color:var(--text);
+    font-weight:800;
+  }
+  .tag{
+    color:var(--muted);
+    font-size:14px;
+    margin:10px 0 28px;
+    line-height:1.5;
+  }
+  .btns{
+    display:grid;
+    gap:12px;
+  }
+  a.btn{
+    display:block;
+    text-decoration:none;
+    padding:14px 18px;
+    border-radius:12px;
+    font-size:15px;
+    font-weight:600;
+    transition:transform .12s ease,filter .12s ease,background .12s ease;
+    border:1px solid var(--border);
+  }
+  a.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+  .primary{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+  }
+  .primary:hover{filter:brightness(1.08)}
+  .ghost{background:var(--card-2);color:var(--text)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .footer{
+    margin-top:26px;
+    color:var(--muted);
+    font-size:12px;
+    transition:transform .4s ease;
+  }
+  .footer a{color:var(--muted);text-decoration:none}
+  .footer a:hover{color:var(--text)}
+  .card:has(.discord-pill:hover) .footer{transform:translateX(-30px)}
+  .discord-pill{
+    position:absolute;
+    right:18px;
+    bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    height:44px;
+    min-width:44px;
+    max-width:44px;
+    overflow:hidden;
+    background:#C06030;
+    color:#fff;
+    border-radius:999px;
+    text-decoration:none;
+    padding:0 10px;
+    white-space:nowrap;
+    transition:max-width .5s ease, filter .2s ease;
+  }
+  .discord-pill:hover{max-width:190px;filter:brightness(1.08)}
+  .discord-pill svg{flex:0 0 auto;width:24px;height:24px;fill:#fff}
+  .discord-pill span{opacity:0;font-size:14px;font-weight:600;transition:opacity .4s ease .12s}
+  .discord-pill:hover span{opacity:1}
+</style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="asset/logo.png" alt="Cozine">
+    <h1>Cozine</h1>
+    <p class="tag">A simple tool for server mods to flag and catch roblox exploiters.</p>
+    <div class="btns">
+      <a class="btn primary" href="https://panel.cozine.xyz">Go to Panel</a>
+      <div class="row">
+        <a class="btn ghost" href="tos.html">Terms of Service</a>
+        <a class="btn ghost" href="privacy.html">Privacy policy</a>
+      </div>
+    </div>
+    <p class="footer">© <span id="y"></span> Cozine · v1.0.0 release</p>
+    <a class="discord-pill" href="https://discord.gg/3ZBebypZJS" target="_blank" rel="noopener" aria-label="Support server">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.036A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C1.253 9.138.546 13.776.858 18.364a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.009c.12.099.245.198.372.292a.077.077 0 0 1-.006.127 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.027zM8.02 15.331c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.955 2.418-2.157 2.418z"/></svg>
+      <span>Support server</span>
+    </a>
+  </main>
+  <script>document.getElementById("y").textContent=new Date().getFullYear();</script>
+</body>
+</html>
