@@ -261,6 +261,8 @@ a.btn {
 a.btn > span {
   position: relative;
   z-index: 1;
+  display: inline-flex;
+  align-items: center;
 }
 
 a.btn::before {
@@ -311,17 +313,13 @@ a.btn:hover::after {
   background: rgba(255, 255, 255, .18);
 }
 
-.primary > span::after {
-  content: '\2192';
+.btn-arrow {
   margin-left: 8px;
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity .2s ease, transform .2s ease;
+  transition: transform .22s ease;
 }
 
-.primary:hover > span::after {
-  opacity: 1;
-  transform: translateX(0);
+.primary:hover .btn-arrow {
+  transform: translateX(5px);
 }
 
 .ghost {
