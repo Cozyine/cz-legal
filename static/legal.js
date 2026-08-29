@@ -32,3 +32,20 @@ if (path.endsWith('/tos') || path.endsWith('/tos/')) {
 } else {
     switchTab('privacy');
 }
+
+// scroll reveal
+document.body.classList.add('js-reveal');
+const revealEls = document.querySelectorAll('.legal .content h2, .legal .content p, .legal .content ul, .legal .content .highlight');
+if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+            if (en.isIntersecting) {
+                en.target.classList.add('reveal-in');
+                io.unobserve(en.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    revealEls.forEach(function (el) { io.observe(el); });
+} else {
+    revealEls.forEach(function (el) { el.classList.add('reveal-in'); });
+}
