@@ -345,7 +345,7 @@
           </div>
           <div class="hint">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-            Direct download via <code style="font-family:'JetBrains Mono',monospace">POST https://cozine.xyz/download</code>
+            Direct download via <code style="font-family:'JetBrains Mono',monospace">POST https://cozine.xyz/download/api</code>
           </div>
         </div>
 
@@ -364,7 +364,7 @@
     </div>
 
     <footer>
-      <p>Backend proxied via Cloudflare Worker: <code style="font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px">cozine.xyz/download → 78.154.103.10:15110</code></p>
+      <p>Frontend: <code style="font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px">cozine.xyz/download</code> → Backend proxied via Cloudflare Worker: <code style="font-family:'JetBrains Mono',monospace;font-size:11px;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px">cozine.xyz/download/api → 78.154.103.10:15110/download/api</code></p>
       <p style="margin-top:6px">Direct URLs are temporary (signed, ~6 hours). If a download fails, re-parse the link. <a href="https://github.com/yt-dlp/yt-dlp" target="_blank" rel="noopener">yt-dlp</a> + ffmpeg. No content is stored on our server.</p>
       <p style="margin-top:10px;opacity:.5">© 2026 cozine.xyz — Built for GitHub Pages</p>
     </footer>
@@ -377,7 +377,7 @@
 
 <script>
 (() => {
-  const API_URL = "https://cozine.xyz/download";
+  const API_URL = "https://cozine.xyz/download/api";
 
   const $input = document.getElementById("urlInput");
   const $btn = document.getElementById("downloadBtn");
@@ -579,7 +579,7 @@
         renderError(msg, code, data.debug || "");
         // hint for CORS/proxy misconfig
         if(res.status===0 || msg.toLowerCase().includes("cors") || msg.toLowerCase().includes("failed to fetch")){
-          console.warn("Hint: Ensure Cloudflare Worker forwards POST to http://78.154.103.10:15110/download and returns CORS headers.");
+          console.warn("Hint: Ensure Cloudflare Worker forwards POST to http://78.154.103.10:15110/download/api and returns CORS headers.");
         }
         return;
       }
@@ -594,7 +594,7 @@
       clearTimeout(timeout);
       const isAbort = err.name === "AbortError";
       const msg = isAbort ? "Request timed out after 45s. The video may be large or the extractor is slow. Try again."
-                          : (err.message && err.message.includes("Failed to fetch") ? "Network error — cannot reach https://cozine.xyz/download. Check that the backend (78.154.103.10:15110) and Cloudflare Worker are running and CORS is enabled."
+                          : (err.message && err.message.includes("Failed to fetch") ? "Network error — cannot reach https://cozine.xyz/download/api. Check that the backend (78.154.103.10:15110) and Cloudflare Worker are running and CORS is enabled."
                                                                                     : err.message || "Network error");
       renderError(msg, isAbort ? "TIMEOUT" : "NETWORK_ERROR");
       console.error(err);
