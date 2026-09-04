@@ -30,6 +30,10 @@ body.light {
   padding: 0;
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--text);
@@ -187,6 +191,7 @@ body {
   left: 0;
   margin-top: 10px;
   width: 268px;
+  max-width: calc(100vw - 44px);
   text-align: left;
   background: var(--card);
   border: 1px solid var(--border);
@@ -773,6 +778,12 @@ a.btn .ripple {
 }
 
 @media (max-width: 600px) {
+  .site-head {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    padding: 16px 18px;
+  }
+
   .hero {
     padding: 48px 22px;
   }
@@ -790,6 +801,7 @@ a.btn .ripple {
   }
 
   .legal nav {
+    position: static;
     flex-direction: column;
     gap: 10px;
   }
@@ -802,5 +814,25 @@ a.btn .ripple {
     padding: 8px 12px;
     background: var(--card-2);
     border-radius: 4px;
+  }
+}
+
+/* touch devices: no sticky hover — changelog opens on tap (pinned) only */
+@media (hover: none) {
+  .badge:not(.pinned):hover {
+    border-radius: 999px;
+  }
+
+  .badge:not(.pinned):hover .badge-more,
+  .badge:not(.pinned):hover .badge-pin {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+  }
+
+  .badge:not(.pinned):hover .changelog {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 14px;
   }
 }
