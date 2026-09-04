@@ -31,7 +31,12 @@ body.light {
 }
 
 html {
+  overflow-x: hidden;
   overflow-x: clip;
+}
+
+img, svg {
+  max-width: 100%;
 }
 
 body {
@@ -42,6 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .site-head,
@@ -51,6 +57,15 @@ body {
 .legal .container {
   position: relative;
   z-index: 1;
+}
+
+/* flex children must never force page width (mobile horizontal slide) */
+.site-head,
+.hero,
+.site-foot,
+.legal .container {
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* top bar */
