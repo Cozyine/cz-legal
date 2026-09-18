@@ -1,0 +1,83 @@
+const buttons = document.querySelectorAll('.nav-btn');
+const contents = document.querySelectorAll('.content');
+
+function switchTab(tabId) {
+    buttons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === tabId);
+    });
+    contents.forEach(content => {
+        content.classList.toggle('active', content.id === tabId);
+    });
+    window.scrollTo(0, 0);
+}
+
+function pathToTab() {
+    const path = window.location.pathname.split('?')[0].split('#')[0];
+    if (path.endsWith('/api-tos') || path.endsWith('/api-tos/')) return 'api-tos';
+    if (path.endsWith('/tos') || path.endsWith('/tos/')) return 'tos';
+    if (path.endsWith('/privacy') || path.endsWith('/privacy/')) return 'privacy';
+    return null;
+}
+
+function initReveal() {
+    document.body.classList.add('js-reveal');
+    const revealEls = document.querySelectorAll('.legal .content h2, .legal .content p, .legal .content ul, .legal .content .highlight');
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                    en.target.classList.add('reveal-in');
+                    io.unobserve(en.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+        revealEls.forEach(function (el) { el.classList.add('reveal-in'); });
+    }
+}
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        const target = button.dataset.target;
+        switchTab(target);
+        history.pushState(null, '', '/' + target + '/');
+    });
+});
+
+window.addEventListener('popstate', () => {
+    const t = pathToTab();
+    if (t && document.getElementById(t)) switchTab(t);
+});
+
+async function loadLegal() {
+    const url = new URL('../static/legal.json', window.location.href);
+    // also try absolute for robustness
+    const urls = [url.href, '/static/legal.json', '../static/legal.json'];
+    let data = null;
+    for (const u of urls) {
+        try {
+            const res = await fetch(u, { cache: 'no-store' });
+            if (res.ok) { data = await res.json(); break; }
+        } catch (_) {}
+    }
+    if (!data) {
+        contents.forEach(c => { c.innerHTML = '<p>Failed to load content.</p>'; });
+        return;
+    }
+    for (const id of ['privacy','tos','api-tos']) {
+        const el = document.getElementById(id);
+        if (el && data[id]) el.innerHTML = data[id];
+    }
+    const initial = pathToTab();
+    if (initial && document.getElementById(initial)) {
+        switchTab(initial);
+    } else if (window.location.pathname.includes('/tos')) {
+        switchTab('tos');
+    } else {
+        switchTab('privacy');
+    }
+    initReveal();
+}
+
+loadLegal();
