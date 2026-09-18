@@ -41,9 +41,25 @@ buttons.forEach(button => {
     button.addEventListener('click', () => {
         const target = button.dataset.target;
         switchTab(target);
-        history.pushState(null, '', '/' + target + '/');
+        // Subpath-safe: swap last path segment so project pages
+        // (/repo/tos/) stay under /repo/ instead of jumping to domain root.
+        try {
+            const parts = window.location.pathname.replace(/\/$/, '').split('/');
+            parts[parts.length - 1] = target;
+            history.pushState(null, '', parts.join('/') + '/');
+        } catch (_) {}
     });
 });
+
+// Resolve static/ relative to THIS script's own URL — immune to page depth,
+// project subpaths, custom domains, and trailing-slash redirects.
+function staticUrl(name) {
+    try {
+        const src = document.currentScript && document.currentScript.src;
+        if (src) return new URL('./' + name, src).href;
+    } catch (_) {}
+    return new URL('../static/' + name, window.location.href).href;
+}
 
 window.addEventListener('popstate', () => {
     const t = pathToTab();
@@ -51,9 +67,11 @@ window.addEventListener('popstate', () => {
 });
 
 async function loadLegal() {
-    const url = new URL('../static/legal.json', window.location.href);
-    // also try absolute for robustness
-    const urls = [url.href, '/static/legal.json', '../static/legal.json'];
+    // NOTE: no absolute '/static/...' fallback — on project pages
+    // (user.github.io/repo/) that resolves to the domain root and can 404
+    // or load the wrong file. Script-relative URL is exact; page-relative
+    // is the backup.
+    const urls = [staticUrl('legal.json'), '../static/legal.json'];
     let data = null;
     for (const u of urls) {
         try {
@@ -62,13 +80,15 @@ async function loadLegal() {
         } catch (_) {}
     }
     if (!data) {
-        contents.forEach(c => { c.innerHTML = '<p>Failed to load content.</p>'; });
-        return;
+        contents.forEach(c => { c.innerHTML = '<p>Failed to load content. Check your connection and refresh.</p>'; });
+    } else {
+        for (const id of ['privacy','tos','api-tos']) {
+            const el = document.getElementById(id);
+            if (el && data[id]) el.innerHTML = data[id];
+        }
     }
-    for (const id of ['privacy','tos','api-tos']) {
-        const el = document.getElementById(id);
-        if (el && data[id]) el.innerHTML = data[id];
-    }
+    // ALWAYS activate a tab — even on fetch failure — so the page is never
+    // blank (.content is display:none until .active is set).
     const initial = pathToTab();
     if (initial && document.getElementById(initial)) {
         switchTab(initial);
