@@ -1,27 +1,35 @@
-// footer year
+
 var yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// staggered hero entrance
+
 var hero = document.querySelector('.hero');
 if (hero) requestAnimationFrame(function () { hero.classList.add('ready'); });
 
-// typewriter tagline (skipped under reduced motion)
+
 var tag = document.querySelector('.hero .tag');
 if (tag && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  var text = tag.textContent.trim();
-  tag.textContent = '';
+  var accentWord = 'exploiters';
+  var fullText = tag.textContent.trim();
+  var head = fullText.slice(0, fullText.length - accentWord.length - 1);
+  tag.innerHTML = '';
   var i = 0;
+  var plainLen = fullText.length;
   var timer = setInterval(function () {
-    tag.textContent = text.slice(0, i++);
-    if (i > text.length) {
+    i++;
+    var shown = fullText.slice(0, i);
+    if (i >= plainLen) {
       clearInterval(timer);
-      tag.innerHTML = 'A simple tool for server mods to flag and catch roblox <span class="accent">exploiters</span>.';
+      tag.innerHTML = head + ' <span class="accent">' + accentWord + '</span>.';
+    } else if (shown.length > head.length) {
+      tag.innerHTML = head + ' <span class="accent">' + shown.slice(head.length + 1) + '</span>';
+    } else {
+      tag.textContent = shown;
     }
   }, 22);
 }
 
-// click-to-pin the changelog badge
+
 var badge = document.querySelector('.badge');
 if (badge) {
   badge.addEventListener('click', function (e) {

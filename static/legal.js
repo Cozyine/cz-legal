@@ -41,8 +41,8 @@ buttons.forEach(button => {
     button.addEventListener('click', () => {
         const target = button.dataset.target;
         switchTab(target);
-        // Subpath-safe: swap last path segment so project pages
-        // (/repo/tos/) stay under /repo/ instead of jumping to domain root.
+        
+        
         try {
             const parts = window.location.pathname.replace(/\/$/, '').split('/');
             parts[parts.length - 1] = target;
@@ -51,8 +51,8 @@ buttons.forEach(button => {
     });
 });
 
-// Resolve static/ relative to THIS script's own URL — immune to page depth,
-// project subpaths, custom domains, and trailing-slash redirects.
+
+
 function staticUrl(name) {
     try {
         const src = document.currentScript && document.currentScript.src;
@@ -67,10 +67,10 @@ window.addEventListener('popstate', () => {
 });
 
 async function loadLegal() {
-    // NOTE: no absolute '/static/...' fallback — on project pages
-    // (user.github.io/repo/) that resolves to the domain root and can 404
-    // or load the wrong file. Script-relative URL is exact; page-relative
-    // is the backup.
+    
+    
+    
+    
     const urls = [staticUrl('legal.json'), '../static/legal.json'];
     let data = null;
     for (const u of urls) {
@@ -87,8 +87,8 @@ async function loadLegal() {
             if (el && data[id]) el.innerHTML = data[id];
         }
     }
-    // ALWAYS activate a tab — even on fetch failure — so the page is never
-    // blank (.content is display:none until .active is set).
+    
+    
     const initial = pathToTab();
     if (initial && document.getElementById(initial)) {
         switchTab(initial);
