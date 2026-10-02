@@ -86,6 +86,9 @@
     rootEl.style.setProperty('--accent-soft', 'rgba(' + r + ',' + g + ',' + b + ',.16)');
     rootEl.style.setProperty('--accent-glow', 'rgba(' + r + ',' + g + ',' + b + ',.45)');
     rootEl.style.setProperty('--accent-glow-soft', 'rgba(' + r + ',' + g + ',' + b + ',0)');
+    var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    rootEl.style.setProperty('--on-accent', lum > 0.6 ? '#0a0a0a' : '#ffffff');
+    if (rootEl.classList) rootEl.classList.toggle('light-accent', lum > 0.6);
     var dot = document.querySelector('.color-btn .dot-preview');
     if (dot) dot.style.background = hex;
     document.querySelectorAll('.swatch[data-color]').forEach(function (s) {

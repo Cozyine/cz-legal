@@ -5,6 +5,7 @@
   --text: #e8eaf0;
   --muted: #8b90a0;
   --accent: #C06030;
+  --on-accent: #ffffff;
   --accent-2: #ffb38a;
   --accent-soft: rgba(192, 96, 48, .16);
   --accent-glow: rgba(192, 96, 48, .45);
@@ -330,7 +331,8 @@ a.btn:hover::after {
 .primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent, #fff);
+  font-weight: 800;
 }
 
 .primary::before {
@@ -434,7 +436,7 @@ a.btn:hover::after {
   max-width: 46px;
   padding: 0 12px;
   overflow: hidden;
-  color: #fff;
+  color: var(--on-accent, #fff);
   background: var(--accent);
   border-radius: 999px;
   white-space: nowrap;
@@ -453,6 +455,9 @@ a.btn:hover::after {
   width: 24px;
   height: 24px;
 }
+
+/* white/light accent: flip the white Discord logo to black so it stays visible */
+.light-accent .discord-pill img { filter: brightness(0); }
 
 .discord-pill span {
   opacity: 0;
