@@ -306,7 +306,10 @@ a.btn:hover {
   color: var(--text);
 }
 
-/* primary buttons keep the auto-contrast text on hover too (a.btn:hover would win otherwise) */
+/* primary buttons keep the auto-contrast text (a.btn rules would win otherwise) */
+a.btn.primary {
+  color: var(--on-accent, #fff);
+}
 a.btn.primary:hover {
   color: var(--on-accent, #fff);
 }
