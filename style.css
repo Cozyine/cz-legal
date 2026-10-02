@@ -303,7 +303,7 @@ a.btn::before {
 
 a.btn:hover {
   border-color: var(--accent);
-  color: #fff;
+  color: var(--text);
 }
 
 a.btn:hover::before {
