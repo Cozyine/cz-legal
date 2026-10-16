@@ -32,18 +32,43 @@ if (tag && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
 var badge = document.querySelector('.badge');
 if (badge) {
+  var log = badge.querySelector('.changelog');
+  // Keep the anchored dropdown fully on-screen: shift it left when the
+  // badge sits mid-row (a full-width dropdown would otherwise spill past
+  // the right edge). It stays attached under the badge bar.
+  function placeLog() {
+    if (!log) return;
+    var m = 8;
+    var b = badge.getBoundingClientRect();
+    var w = Math.min(268, window.innerWidth - 44);
+    var shift = (b.left + w) - (window.innerWidth - m);
+    if (shift < 0) shift = 0;
+    var maxShift = b.left - m;
+    if (shift > maxShift) shift = maxShift > 0 ? maxShift : 0;
+    log.style.marginLeft = shift ? (-shift) + 'px' : '';
+  }
+  function clearLog() { if (log) log.style.marginLeft = ''; }
+  function toggleBadge() {
+    badge.classList.toggle('pinned');
+    if (badge.classList.contains('pinned')) placeLog();
+    else clearLog();
+  }
   badge.addEventListener('click', function (e) {
     e.stopPropagation();
     if (e.target.closest('.changelog')) return;
-    badge.classList.toggle('pinned');
+    toggleBadge();
   });
   badge.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      badge.classList.toggle('pinned');
+      toggleBadge();
     }
   });
   document.addEventListener('click', function () {
     badge.classList.remove('pinned');
+    clearLog();
+  });
+  window.addEventListener('resize', function () {
+    if (badge.classList.contains('pinned')) placeLog();
   });
 }

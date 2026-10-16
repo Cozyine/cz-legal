@@ -21,6 +21,7 @@
   var rootEl = document.documentElement;
   var accents = ['#C06030', '#3B82F6', '#22C55E', '#A855F7', '#EF4444'];
   var storedAccent = null;
+  var currentAccent = '#C06030';
   try { storedAccent = localStorage.getItem('cozine-accent'); } catch (e) {}
 
   var pinEl = document.querySelector('.badge-pin img');
@@ -94,7 +95,35 @@
     document.querySelectorAll('.swatch[data-color]').forEach(function (s) {
       s.classList.toggle('active', s.getAttribute('data-color').toLowerCase() === hex.toLowerCase());
     });
+    currentAccent = hex;
+    applyAccentText(hex);
     scheduleTint(hex);
+  }
+  // Text-safe accent for links/badges: extreme accents (white/black custom
+  // picks) are blended toward readable gray for the CURRENT theme, so
+  // clickable highlighted text never vanishes. Fills keep the true accent.
+  function applyAccentText(hex) {
+    var h = hex.replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    var r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    var lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    var light = document.body.classList.contains('light');
+    var t;
+    if (!light && lum < 0.30) {
+      // dark bg: only lift truly dark accents, ramp 0 -> 60% toward white
+      t = 0.6 * (1 - lum / 0.30);
+      r = Math.round(r + (255 - r) * t);
+      g = Math.round(g + (255 - g) * t);
+      b = Math.round(b + (255 - b) * t);
+    } else if (light && lum > 0.70) {
+      // light bg: only dim truly bright accents, ramp 0 -> 55% toward black
+      t = 0.55 * ((lum - 0.70) / 0.30);
+      r = Math.round(r * (1 - t));
+      g = Math.round(g * (1 - t));
+      b = Math.round(b * (1 - t));
+    }
+    rootEl.style.setProperty('--accent-text', 'rgb(' + r + ',' + g + ',' + b + ')');
   }
   function saveAccent(hex) {
     applyAccent(hex);
@@ -136,13 +165,41 @@
     wrap.appendChild(pop);
     tog0.insertAdjacentElement('afterend', wrap);
     applyAccent(storedAccent || '#C06030');
+    function closePop() { pop.classList.remove('open'); }
+    // Keep the popup inside the viewport: measure after opening and nudge
+    // it via the `right` offset (it grows leftwards from the button), and
+    // flip above the button if there is no room below.
+    function placePop() {
+      pop.style.right = '0';
+      pop.style.top = '';
+      pop.style.bottom = '';
+      var m = 8;
+      var r = pop.getBoundingClientRect();
+      var dx = 0;
+      if (r.right > window.innerWidth - m) dx = r.right - (window.innerWidth - m);
+      if (r.left - dx < m) dx = r.left - m;
+      if (dx) pop.style.right = dx + 'px';
+      r = pop.getBoundingClientRect();
+      if (r.bottom > window.innerHeight - m && r.top > 0) {
+        pop.style.top = 'auto';
+        pop.style.bottom = 'calc(100% + 10px)';
+      }
+    }
     cBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       pop.classList.toggle('open');
+      if (pop.classList.contains('open')) placePop();
     });
     document.addEventListener('click', function (e) {
-      if (!pop.contains(e.target)) pop.classList.remove('open');
+      if (!pop.contains(e.target)) closePop();
     });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePop();
+    });
+    window.addEventListener('resize', function () {
+      if (pop.classList.contains('open')) placePop();
+    });
+    window.addEventListener('scroll', closePop, { passive: true });
   }
 
   
@@ -150,22 +207,17 @@
   try {
     if (localStorage.getItem('cozine-theme') === 'light') root.classList.add('light');
   } catch (e) {}
+  // theme landed after the accent init — recompute the text-safe accent
+  applyAccentText(currentAccent);
   var tog = document.getElementById('themeToggle');
   if (tog) {
     tog.addEventListener('click', function () {
+      // Whole-screen theme flip: no circle reveal, the entire page just
+      // switches (body has a short background/color fade).
       var light = !root.classList.contains('light');
-      var r = tog.getBoundingClientRect();
-      document.documentElement.style.setProperty('--vx', (r.left + r.width / 2) + 'px');
-      document.documentElement.style.setProperty('--vy', (r.top + r.height / 2) + 'px');
-      function apply() {
-        root.classList.toggle('light', light);
-        try { localStorage.setItem('cozine-theme', light ? 'light' : 'dark'); } catch (e) {}
-      }
-      if (document.startViewTransition && !reduce) {
-        document.startViewTransition(apply);
-      } else {
-        apply();
-      }
+      root.classList.toggle('light', light);
+      try { localStorage.setItem('cozine-theme', light ? 'light' : 'dark'); } catch (e) {}
+      applyAccentText(currentAccent);
     });
   }
 
